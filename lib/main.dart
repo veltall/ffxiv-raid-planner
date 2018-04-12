@@ -3,8 +3,8 @@ import 'ffxiv_ability.dart';
 
 void main() => runApp(new RaidPlannerApp());
 
-const kAsset1 = 'FFVI-Suplex.png';
-const kAsset2 = 'kefka.png';
+const kAsset1 = 'res/images/icons/FFVI-Suplex.png';
+const kAsset2 = 'res/images/icons/kefka.png';
 
 class RaidPlannerApp extends StatelessWidget {
   final _title = "FFXIV Raid Planner Tool";
@@ -181,7 +181,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
                         name: 'Rampart',
                         duration: new Duration(seconds: 20),
                         recast: new Duration(seconds: 90),
-                      )..activate(25),
+                      )..activate(time: 25),
                       now: i,
                     ),
                     new AbilityWidget(
@@ -189,7 +189,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
                         name: 'Raw Intuition',
                         duration: new Duration(seconds: 20),
                         recast: new Duration(seconds: 90),
-                      )..activate(45),
+                      )..activate(time: 45),
                       now: i,
                     ),
                     new AbilityWidget(
@@ -197,7 +197,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
                         name: 'Convalescence',
                         duration: new Duration(seconds: 20),
                         recast: new Duration(seconds: 120),
-                      )..activate(45),
+                      )..activate(time: 45),
                       now: i,
                     ),
                     new AbilityWidget(
@@ -205,7 +205,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
                         duration: new Duration(seconds: 6),
                         recast: new Duration(seconds: 180),
                         name: "Holmgang",
-                      )..activate(10),
+                      )..activate(time: 10),
                       now: i,
                     ),
                   ],

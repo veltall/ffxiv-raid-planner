@@ -25,14 +25,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    # - /res/images/icons/FFVI-Suplex.png
-    - FFVI-Suplex.png
-    - kefka.png
-    - rampart.png
-    - vengeance.png
-    - holmgang.png
-    - rawintuition.png
-    - convalescence.png
     - res/images/icons/FFVI-Suplex.png
     - res/images/icons/kefka.png
     - res/images/icons/skills/rampart.png

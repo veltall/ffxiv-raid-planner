@@ -16,8 +16,7 @@ class Ability {
   String _iconPath;
   SplayTreeMap _history;
 
-  Ability(
-      {@required this.name, @required this.duration, @required this.recast}) {
+  Ability({@required this.name, @required this.duration, @required this.recast}) {
     // required named parameters
     assert(this.name != null);
     assert(this.duration != null);
@@ -31,15 +30,14 @@ class Ability {
     _history = _allhistory[name];
   }
 
-  bool isValidActivationTime(int now) {
-    bool isDuplicate = _history.containsKey(now);
-    // int prev = _history.lastKeyBefore(now);
-    // int next = _history.firstKeyAfter(now);
-    // int prevDistance = prev == null ? recast.inSeconds : now - prev;
-    // int nextDistance = next == null ? recast.inSeconds : next - now;
-    return isDuplicate
-        ? false
-        : _overlapPrev(now) <= 0 && _overlapNext(now) <= 0;
+  bool isValidActivationTime({@required int time}) {
+    // bool isDuplicate = _history.containsKey(time);
+    return _overlapPrev(time) <= 0 && _overlapNext(time) <= 0;
+  }
+
+  bool isInHistory({@required int time}) {
+    bool isDuplicate = _history.containsKey(time);
+    return isDuplicate;
   }
 
   // The result returned by this method can be understood as
@@ -65,10 +63,18 @@ class Ability {
     return overlap;
   }
 
-  void activate(int currentTimeInSeconds) {
-    if (isValidActivationTime(currentTimeInSeconds)) {
-      _history[currentTimeInSeconds] = true;
-    }
+  Ability activate({@required int time}) {
+    if (isValidActivationTime(time: time)) {
+      _history[time] = true;
+      return this;
+    } else throw new ArgumentError('Invalid ability activation time: $time');
+  }
+
+  Ability deactivate({@required int time}) {
+    if (isInHistory(time: time)) {
+      _history.remove(time);
+      return this;
+    } else throw new ArgumentError('Invalid ability deactivation time: $time');
   }
 }
 
@@ -92,7 +98,6 @@ class _AbilityWidgetState extends State<AbilityWidget> {
     final int wait = ability._overlapPrev(now);
     final int hurry = ability._overlapNext(now);
     print('${ability.name}: now = $now, overlapPrev = $wait, overlapNext = ${ability._overlapNext(now)}');
-    // print('+ building ${widget.ability.name}');
     return new Container(
       height: 64.0,
       child: new Column(
@@ -102,13 +107,13 @@ class _AbilityWidgetState extends State<AbilityWidget> {
           ),
           new Row(
             children: <Widget>[
-              ability.isValidActivationTime(now)
+              ability.isValidActivationTime(time: now)
                   ? new Text('')
                   : new Text('${wait.toString()}s'),
-              ability.isValidActivationTime(now)
+              ability.isValidActivationTime(time: now)
                   ? new Icon(Icons.check)
                   : new Icon(Icons.timer),
-              ability.isValidActivationTime(now)
+              ability.isValidActivationTime(time: now)
                   ? new Text('')
                   : new Text('${hurry.toString()}s'),
             ],
@@ -120,7 +125,6 @@ class _AbilityWidgetState extends State<AbilityWidget> {
 
   @override
   void dispose() {
-    // print('- disposing ${widget.ability.name}');
     super.dispose();
   }
 }
