@@ -173,42 +173,44 @@ class _EncounterScreenState extends State<EncounterScreen> {
             ),
             child: new Padding(
                 padding: const EdgeInsets.all(32.0),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    new AbilityWidget(
-                      ability: new Ability(
-                        name: 'Rampart',
-                        duration: new Duration(seconds: 20),
-                        recast: new Duration(seconds: 90),
-                      )..activate(time: 25),
-                      now: i,
-                    ),
-                    new AbilityWidget(
-                      ability: new Ability(
-                        name: 'Raw Intuition',
-                        duration: new Duration(seconds: 20),
-                        recast: new Duration(seconds: 90),
-                      )..activate(time: 45),
-                      now: i,
-                    ),
-                    new AbilityWidget(
-                      ability: new Ability(
-                        name: 'Convalescence',
-                        duration: new Duration(seconds: 20),
-                        recast: new Duration(seconds: 120),
-                      )..activate(time: 45),
-                      now: i,
-                    ),
-                    new AbilityWidget(
-                      ability: new Ability(
-                        duration: new Duration(seconds: 6),
-                        recast: new Duration(seconds: 180),
-                        name: "Holmgang",
-                      )..activate(time: 10),
-                      now: i,
-                    ),
-                  ],
+                child: Container(
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      new AbilityWidget(
+                        ability: new Ability(
+                          name: 'Rampart',
+                          duration: new Duration(seconds: 20),
+                          recast: new Duration(seconds: 90),
+                        )..activate(time: 25),
+                        now: i,
+                      ),
+                      new AbilityWidget(
+                        ability: new Ability(
+                          name: 'Raw Intuition',
+                          duration: new Duration(seconds: 20),
+                          recast: new Duration(seconds: 90),
+                        )..activate(time: 45),
+                        now: i,
+                      ),
+                      new AbilityWidget(
+                        ability: new Ability(
+                          name: 'Convalescence',
+                          duration: new Duration(seconds: 20),
+                          recast: new Duration(seconds: 120),
+                        )..activate(time: 45),
+                        now: i,
+                      ),
+                      new AbilityWidget(
+                        ability: new Ability(
+                          duration: new Duration(seconds: 6),
+                          recast: new Duration(seconds: 180),
+                          name: "Holmgang",
+                        )..activate(time: 10),
+                        now: i,
+                      ),
+                    ],
+                  ),
                 )),
           );
         })
@@ -285,6 +287,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
                         backgroundColor: Colors.black,
                       ),
                       trailing: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           new Row(
                             children: <Widget>[

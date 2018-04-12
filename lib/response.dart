@@ -30,6 +30,10 @@ class Response {
 }
 
 class ResponseWidget extends StatefulWidget {
+  final Response response;
+
+  ResponseWidget({@required this.response});
+  
   @override
   _ResponseWidgetState createState() => new _ResponseWidgetState();
 }
@@ -37,8 +41,17 @@ class ResponseWidget extends StatefulWidget {
 class _ResponseWidgetState extends State<ResponseWidget> {
   @override
   Widget build(BuildContext context) {
+    List<Ability> firstFive = widget.response.actions.sublist(0,4);
     return new Container(
-      
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,   // TODO: ultimately this line should not matter
+        children: firstFive.map((ability){
+          return new CircleAvatar(
+            radius: 10.0,
+            backgroundImage: new AssetImage(ability.iconPath),
+          );
+        }).toList(),
+      ),
     );
   }
 }

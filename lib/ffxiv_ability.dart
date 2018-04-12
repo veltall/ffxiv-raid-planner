@@ -13,7 +13,7 @@ class Ability {
   Duration duration;
 
   // local data
-  String _iconPath;
+  String iconPath;
   SplayTreeMap _history;
 
   Ability({@required this.name, @required this.duration, @required this.recast}) {
@@ -24,7 +24,7 @@ class Ability {
     // icon's filename has no spaces, apostrophes, and is all lowercase
     RegExp spaceSelector = new RegExp(r"[\s|']+");
     final String filename = name.replaceAll(spaceSelector, "").toLowerCase();
-    _iconPath = 'res/images/icons/skills/$filename.png';
+    iconPath = 'res/images/icons/skills/$filename.png';
     if (_allhistory[name] == null)
       _allhistory[name] = new SplayTreeMap<int, bool>();
     _history = _allhistory[name];
@@ -103,7 +103,7 @@ class _AbilityWidgetState extends State<AbilityWidget> {
       child: new Column(
         children: <Widget>[
           new CircleAvatar(
-            backgroundImage: new AssetImage(ability._iconPath),
+            backgroundImage: new AssetImage(ability.iconPath),
           ),
           new Row(
             children: <Widget>[
