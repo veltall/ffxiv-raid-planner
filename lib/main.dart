@@ -44,6 +44,7 @@ class RaidPlannerApp extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           child: new Icon(Icons.list),
           elevation: 13.0,
+          onPressed: null,
         ),
       ),
     );
