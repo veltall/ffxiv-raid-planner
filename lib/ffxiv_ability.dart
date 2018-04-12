@@ -108,14 +108,11 @@ class _AbilityWidgetState extends State<AbilityWidget> {
           new Row(
             children: <Widget>[
               ability.isValidActivationTime(time: now)
-                  ? new Text('')
-                  : new Text('${wait.toString()}s'),
-              ability.isValidActivationTime(time: now)
                   ? new Icon(Icons.check)
                   : new Icon(Icons.timer),
               ability.isValidActivationTime(time: now)
                   ? new Text('')
-                  : new Text('${hurry.toString()}s'),
+                  : new Text('${wait.toString()}s'),
             ],
           ),
         ],

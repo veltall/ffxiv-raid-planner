@@ -24,8 +24,8 @@ class Response {
   Response removeAbility({@required Ability ability}) {
     if (ability.isInHistory(time: time)) {
       actions.remove(ability);
-      return this;
-    } else throw new ArgumentError('No such ability to remove from history.');
+    }
+    return this;  // yields a response without the ability in question either way
   }
 }
 
