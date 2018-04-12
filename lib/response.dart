@@ -39,13 +39,18 @@ class ResponseWidget extends StatefulWidget {
 }
 
 class _ResponseWidgetState extends State<ResponseWidget> {
+  int _displayMax;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     // retrieve data
     var list = widget.response.actions;
-    int _max = list.length > 5 ? 5 : list.length;
-    List<Ability> firstFive = widget.response.actions.sublist(0,_max);
-    
+    _displayMax = list.length > 5 ? 5 : list.length;
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    List<Ability> firstFive = widget.response.actions.sublist(0,_displayMax);
     // build UI
     return new Container(
       child: new Row(
@@ -62,6 +67,11 @@ class _ResponseWidgetState extends State<ResponseWidget> {
 }
 
 class ResponseScreen extends StatefulWidget {
+  final Response response;
+  ResponseScreen({@required this.response}) {
+    assert(this.response != null);
+  }
+
   @override
   _ResponseScreenState createState() => new _ResponseScreenState();
 }
@@ -69,8 +79,29 @@ class ResponseScreen extends StatefulWidget {
 class _ResponseScreenState extends State<ResponseScreen> {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Respond to Event'),
+        actions: <Widget>[
+          new Icon(Icons.save),
+        ],
+      ),
+      body: new ListView(
+        addAutomaticKeepAlives: true,
+        children: widget.response.actions.map((ability){
+          return new DetailedAbilityWidget(ability);
+        }).toList(),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        child: new Icon(Icons.add),
+        onPressed: _handleFABPress,
+      ),
     );
+  }
+
+  void _handleFABPress() {
+    setState(() {
+          
+        });
   }
 }

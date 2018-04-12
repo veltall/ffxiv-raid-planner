@@ -11,12 +11,19 @@ class Ability {
   String name;
   Duration recast; // in milliseconds
   Duration duration;
+  String job;
+  String effect;
 
   // local data
   String iconPath;
   SplayTreeMap _history;
 
-  Ability({@required this.name, @required this.duration, @required this.recast}) {
+  Ability(
+      {@required this.name,
+      @required this.duration,
+      @required this.recast,
+      this.job,
+      this.effect}) {
     // required named parameters
     assert(this.name != null);
     assert(this.duration != null);
@@ -76,14 +83,16 @@ class Ability {
     if (isValidActivationTime(time: time)) {
       _history[time] = true;
       return this;
-    } else throw new ArgumentError('Invalid ability activation time: $time');
+    } else
+      throw new ArgumentError('Invalid ability activation time: $time');
   }
 
   Ability deactivate({@required int time}) {
     if (isInHistory(time: time)) {
       _history.remove(time);
       return this;
-    } else throw new ArgumentError('Invalid ability deactivation time: $time');
+    } else
+      throw new ArgumentError('Invalid ability deactivation time: $time');
   }
 }
 
@@ -106,7 +115,8 @@ class _AbilityWidgetState extends State<AbilityWidget> {
     final int now = widget.now;
     final int wait = ability._overlapPrev(now);
     final int hurry = ability._overlapNext(now);
-    print('${ability.name}: now = $now, overlapPrev = $wait, overlapNext = ${ability._overlapNext(now)}');
+    print(
+        '${ability.name}: now = $now, overlapPrev = $wait, overlapNext = ${ability._overlapNext(now)}');
     return new Container(
       height: 64.0,
       child: new Column(
@@ -132,5 +142,58 @@ class _AbilityWidgetState extends State<AbilityWidget> {
   @override
   void dispose() {
     super.dispose();
+  }
+}
+
+// ------------------------------------------
+
+class DetailedAbilityWidget extends StatelessWidget {
+  final Ability ability;
+  DetailedAbilityWidget({@required this.ability});
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Row(
+                children: <Widget>[
+                  new CircleAvatar(),
+                  new Column(
+                    children: <Widget>[
+                      new Text(
+                        ability.name,
+                        style: new TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      new CircleAvatar(backgroundImage: AssetImage(ability.iconPath)),
+                    ],
+                  ),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Icon(Icons.timer_3),
+                  new Text(ability.duration.toString()),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Icon(Icons.history),
+                  new Text(ability.recast.inSeconds.toString())
+                ],
+              ),
+            ],
+          ),
+          new Text(ability.effect),
+        ],
+      ),
+    );
   }
 }
