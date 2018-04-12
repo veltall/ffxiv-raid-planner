@@ -18,8 +18,8 @@ class Ability {
   String iconPath;
   SplayTreeMap _history;
 
-  Ability(
-      {@required this.name,
+  Ability({
+      @required this.name,
       @required this.duration,
       @required this.recast,
       this.job,
@@ -157,6 +157,7 @@ class DetailedAbilityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ability.iconPath;
     return new Container(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,14 +170,11 @@ class DetailedAbilityWidget extends StatelessWidget {
                   new CircleAvatar(),
                   new Column(
                     children: <Widget>[
-                      new Text(
-                        ability.name,
-                        style: new TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      new Text(ability.name,
+                          style: Theme.of(context).textTheme.headline),
+                      new CircleAvatar(
+                        backgroundImage: new AssetImage(ability.iconPath),
                       ),
-                      new CircleAvatar(backgroundImage: AssetImage(ability.iconPath)),
                     ],
                   ),
                 ],
