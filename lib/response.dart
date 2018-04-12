@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'ffxiv_ability.dart';
@@ -77,6 +79,19 @@ class ResponseScreen extends StatefulWidget {
 }
 
 class _ResponseScreenState extends State<ResponseScreen> {
+  Random rng = new Random();
+  List<Ability> allSkills = <Ability>[];
+
+  @override
+  void initState() {
+    allSkills.add(new Ability(name: "Convalescence", duration: new Duration(seconds: 20), recast: new Duration(seconds: 120)));
+    allSkills.add(new Ability(name: "Holmgang", duration: new Duration(seconds: 6), recast: new Duration(seconds: 180)));
+    allSkills.add(new Ability(name: "Rampart", duration: new Duration(seconds: 20), recast: new Duration(seconds: 90)));
+    allSkills.add(new Ability(name: "Raw Intuition", duration: new Duration(seconds: 20), recast: new Duration(seconds: 90)));
+    allSkills.add(new Ability(name: "Vengeance", duration: new Duration(seconds: 15), recast: new Duration(seconds: 120)));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -89,19 +104,27 @@ class _ResponseScreenState extends State<ResponseScreen> {
       body: new ListView(
         addAutomaticKeepAlives: true,
         children: widget.response.actions.map((ability){
-          return new DetailedAbilityWidget(ability);
+          return Row(
+            children: <Widget>[
+              new DetailedAbilityWidget(ability: ability),
+              new Icon(Icons.remove),
+            ],
+          );
         }).toList(),
       ),
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
-        onPressed: _handleFABPress,
+        onPressed: _handleFABPress(context),
       ),
     );
   }
 
-  void _handleFABPress() {
-    setState(() {
-          
-        });
+  _handleFABPress(BuildContext context) {
+    // dummy behavior: add a random skill to the event for each press
+    if (allSkills.length > 0) {
+      int next = rng.nextInt(5);
+      setState(() => widget.response.actions.add(allSkills[next]));
+      allSkills.remove(next);
+    } else Scaffold.of(context).showSnackBar(new SnackBar(content: new Text('Added all available skills')));
   }
 }

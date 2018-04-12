@@ -146,7 +146,11 @@ class _AbilityWidgetState extends State<AbilityWidget> {
 }
 
 // ------------------------------------------
-
+// Details include:
+// - name
+// - recast
+// - effect duration
+// - tooltip text, including potency and additional effects
 class DetailedAbilityWidget extends StatelessWidget {
   final Ability ability;
   DetailedAbilityWidget({@required this.ability});
