@@ -41,10 +41,12 @@ class ResponseWidget extends StatefulWidget {
 class _ResponseWidgetState extends State<ResponseWidget> {
   @override
   Widget build(BuildContext context) {
-    List<Ability> firstFive = widget.response.actions.sublist(0,4);
+    var list = widget.response.actions;
+    int _max = list.length > 5 ? 5 : list.length;
+    List<Ability> firstFive = widget.response.actions.sublist(0,_max);
     return new Container(
       child: new Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,   // TODO: ultimately this line should not matter
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,   // TODO: ultimately this line should not matter, use Column's crossaxis
         children: firstFive.map((ability){
           return new CircleAvatar(
             radius: 10.0,

@@ -40,6 +40,15 @@ class Ability {
     return isDuplicate;
   }
 
+  bool isInEffectAt({@required int time}) {
+    int useTime = _history.lastKeyBefore(time);
+    bool isInEffect = false;
+    if (useTime != null && useTime + recast.inSeconds > time) {
+      isInEffect = true;
+    } // else remains false
+    return isInEffect;
+  }
+
   // The result returned by this method can be understood as
   // "I can use this cooldown starting from `overLap` to the right of now"
   // e.g. prev = 15, recast = 30, now = 50
