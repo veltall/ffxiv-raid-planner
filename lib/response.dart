@@ -8,7 +8,7 @@ class Response {
 
   Response({@required this.time}) {
     assert(this.time != null);
-    assert(this.time >= 0);
+    assert(this.time > 0);
   }
 
   Response addAbility({@required Ability ability}) {
