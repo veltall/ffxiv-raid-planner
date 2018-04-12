@@ -13,6 +13,9 @@ class Response {
 
   Response addAbility({@required Ability ability}) {
     if (ability.isValidActivationTime(time: time)) {
+      if (actions.contains(ability)) {
+        throw new ArgumentError('Ability already added to this event.');
+      }
       actions.add(ability);
       return this;
     } else throw new ArgumentError('Invalid time data during Ability addition process.');
