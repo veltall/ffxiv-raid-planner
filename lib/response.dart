@@ -58,10 +58,15 @@ class _ResponseWidgetState extends State<ResponseWidget> {
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,   // TODO: ultimately this line should not matter, use Column's crossaxis
         children: firstFive.map((ability){
-          return new CircleAvatar(
-            radius: 10.0,
-            backgroundImage: new AssetImage(ability.iconPath),
-          );
+          return (ability != null) 
+            ? new CircleAvatar(
+                radius: 10.0,
+                backgroundImage: new AssetImage(ability.iconPath),
+              )
+            : new CircleAvatar(
+                radius: 10.0,
+                child: new Text('...'),
+              );
         }).toList(),
       ),
     );

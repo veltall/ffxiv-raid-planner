@@ -12,4 +12,6 @@ void main() {
   List<int> c = a.sublist(0, end);
   print("c = $c");
   print("a[4] = ${a[4]}");
+  var d = a.sublist(0,0);
+  print('a.sublist(0,0) = $d');
 }

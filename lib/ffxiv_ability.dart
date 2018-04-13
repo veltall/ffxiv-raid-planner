@@ -72,7 +72,7 @@ class Ability {
   int _overlapNext(int now) {
     int overlap = now - 720; // enrage at 12 minutes
     int next = _history.firstKeyAfter(now);
-    print('debug $name next = $next');
+    // print('debug $name next = $next');
     if (next != null) {
       overlap = now - (next - recast.inSeconds);
     }
@@ -114,9 +114,6 @@ class _AbilityWidgetState extends State<AbilityWidget> {
     final Ability ability = widget.ability;
     final int now = widget.now;
     final int wait = ability._overlapPrev(now);
-    final int hurry = ability._overlapNext(now);
-    print(
-        '${ability.name}: now = $now, overlapPrev = $wait, overlapNext = ${ability._overlapNext(now)}');
     return new Container(
       height: 64.0,
       child: new Column(
