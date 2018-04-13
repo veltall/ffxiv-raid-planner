@@ -14,4 +14,7 @@ void main() {
   print("a[4] = ${a[4]}");
   var d = a.sublist(0,0);
   print('a.sublist(0,0) = $d');
+  int sec = 723;
+  Duration time = new Duration(seconds: sec);
+  print("${time.inMinutes}:${(time.inSeconds-time.inMinutes*60).toString().padLeft(2,'0')}");
 }

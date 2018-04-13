@@ -130,7 +130,7 @@ class _MainScreenState extends State<MainScreen> {
     // events = new List.generate(240, (i) => 'event #${i*3}');
     List<Map<String, String>> events = new List.generate(240, (index) {
       Map<String, String> event = new Map<String, String>();
-      int time = index*3;
+      int time = index * 3;
       event['time'] = time.toString();
       if (time % 11 == 0) {
         event['title'] = 'Raidwide';
@@ -138,7 +138,7 @@ class _MainScreenState extends State<MainScreen> {
       } else if (time % 45 == 0) {
         event['title'] = 'Tank-Buster';
         event['desc'] = 'Heavy, single-hit damage';
-      } else if (time % 39 == 0){
+      } else if (time % 39 == 0) {
         event['title'] = 'Targeted';
         event['desc'] = 'Heavy, avoidable AoE damage';
       } else {

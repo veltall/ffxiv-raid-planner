@@ -14,11 +14,12 @@ class Event {
   // functional data
   Response res;
 
-  Event(
-      {@required this.time,
-      @required this.title,
-      @required this.res,
-      @required this.desc});
+  Event({
+    @required this.time,
+    @required this.title,
+    @required this.res,
+    @required this.desc,
+  });
 }
 
 class EventWidget extends StatefulWidget {
@@ -61,24 +62,32 @@ class _EventWidgetState extends State<EventWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // convert time to presentation format
+    int time = widget.event.time;
+    Duration temp = new Duration(seconds: time);
+    String minute = temp.inMinutes.toString().padLeft(2,'0');
+    String seconds = (temp.inSeconds % 60).toString().padLeft(2,'0');
+    String timeStamp = minute + ":" + seconds;
+
     return new Container(
       child: new Row(
         children: <Widget>[
           new Container(
-            height: 80.0,
-            width: 350.0,
+            height: 64.0,
             child: new Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 new CircleAvatar(
                   child: new Icon(avatar),
                   backgroundColor: (widget.event.title == "Raidwide")
-                    ? Colors.amber
-                    : Colors.white,
-                  foregroundColor: Colors.red,
+                      ? Colors.amber
+                      : Colors.transparent,
+                  foregroundColor: (widget.event.title == "Raidwide")
+                      ? Colors.white
+                      : Colors.red,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
+                  padding: const EdgeInsets.only(left: 16.0),
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,12 +99,19 @@ class _EventWidgetState extends State<EventWidget> {
                           fontSize: 18.0,
                         ),
                       ),
-                      new Text(
-                        widget.event.desc,
-                        style: new TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.0,
-                        ),
+                      Row(
+                        children: <Widget>[
+                          // new Icon(Icons.av_timer),
+                          // new Icon(Icons.timer),
+                          new Icon(Icons.access_time, color: Colors.grey, size: 20.0),
+                          new Text(
+                            timeStamp.padLeft(6,' '),
+                            style: new TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
                       )
                     ],
                   ),
@@ -112,18 +128,8 @@ class _EventWidgetState extends State<EventWidget> {
           // ),
           new ResponseWidget(response: widget.event.res),
         ],
+        mainAxisSize: MainAxisSize.max,
       ),
     );
-    // return new ExpansionTile(
-    //   title: new Text(widget.event.title),
-    //   children: <Widget>[
-    //     new ListTile(
-    //       title: new Text(widget.event.time.toString()),
-    //     ),
-    //     new ListTile(
-    //       title: new Text(widget.event.desc),
-    //     ),
-    //   ],
-    // );
   }
 }
