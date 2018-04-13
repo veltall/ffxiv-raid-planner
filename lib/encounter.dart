@@ -41,87 +41,90 @@ class Encounter {
 
 class EncounterScreen extends StatefulWidget {
   // housekeeping
-  final GlobalKey<ScaffoldState> scaffoldKey;
   final Encounter enc;
 
-  EncounterScreen({@required this.scaffoldKey, @required this.enc});
+  EncounterScreen({@required this.enc});
 
   @override
   _EncounterScreenState createState() => new _EncounterScreenState();
 }
 
 class _EncounterScreenState extends State<EncounterScreen> {
-  GlobalKey<ScaffoldState> _scaffoldKey;
   double _progress;
+  int _selected;
 
   @override
   void initState() {
     super.initState();
     _progress = 0.0;
-    _scaffoldKey = widget.scaffoldKey;
+    _selected = -1;
   }
 
   void _showBottomSheet(int i) {
-    _scaffoldKey.currentState.showBottomSheet<Null>((BuildContext context) {
-      final ThemeData themeData = Theme.of(context);
-      return new Container(
-        decoration: new BoxDecoration(
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        final ThemeData themeData = Theme.of(context);
+        return new Container(
+          decoration: new BoxDecoration(
             border: new Border(
-                top: new BorderSide(color: themeData.disabledColor))),
-        child: new Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Container(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new AbilityWidget(
-                  ability: new Ability(
-                    name: 'Rampart',
-                    duration: new Duration(seconds: 20),
-                    recast: new Duration(seconds: 90),
-                  ),
-                  now: i,
-                ),
-                new AbilityWidget(
-                  ability: new Ability(
-                    name: 'Raw Intuition',
-                    duration: new Duration(seconds: 20),
-                    recast: new Duration(seconds: 90),
-                  ),
-                  now: i,
-                ),
-                new AbilityWidget(
-                  ability: new Ability(
-                    name: 'Convalescence',
-                    duration: new Duration(seconds: 20),
-                    recast: new Duration(seconds: 120),
-                  ),
-                  now: i,
-                ),
-                new AbilityWidget(
-                  ability: new Ability(
-                    duration: new Duration(seconds: 6),
-                    recast: new Duration(seconds: 180),
-                    name: "Holmgang",
-                  ),
-                  now: i,
-                ),
-              ],
+              top: new BorderSide(color: themeData.disabledColor),
             ),
           ),
-        ),
-      );
-    });
+          child: new Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Container(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  new AbilityWidget(
+                    ability: new Ability(
+                      name: 'Rampart',
+                      duration: new Duration(seconds: 20),
+                      recast: new Duration(seconds: 90),
+                    ),
+                    now: i,
+                  ),
+                  new AbilityWidget(
+                    ability: new Ability(
+                      name: 'Raw Intuition',
+                      duration: new Duration(seconds: 20),
+                      recast: new Duration(seconds: 90),
+                    ),
+                    now: i,
+                  ),
+                  new AbilityWidget(
+                    ability: new Ability(
+                      name: 'Convalescence',
+                      duration: new Duration(seconds: 20),
+                      recast: new Duration(seconds: 120),
+                    ),
+                    now: i,
+                  ),
+                  new AbilityWidget(
+                    ability: new Ability(
+                      duration: new Duration(seconds: 6),
+                      recast: new Duration(seconds: 180),
+                      name: "Holmgang",
+                    ),
+                    now: i,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _handleEventOnTap(Event event) {
     setState(() {
       _progress = event.time / widget.enc.enrage;
+      _selected = event.time;
     });
-    _showBottomSheet(232);
+    _showBottomSheet(event.time);
   }
-
-  void _handleLongPress() {}
 
   @override
   Widget build(BuildContext context) {
@@ -142,15 +145,16 @@ class _EncounterScreenState extends State<EncounterScreen> {
         ),
       ),
       body: new ListView(
-        addAutomaticKeepAlives: false,
-        padding: const EdgeInsets.only(left: 8.0),
+        itemExtent: 98.0,
+        padding: const EdgeInsets.only(left: 8.0, top: 16.0),
         children: widget.enc.timeline.map((event) {
-          return new ListTile(
-            title: new EventWidget(event: event),
-            subtitle: new Divider(color: Colors.grey, height: 2.0),
-            selected: (event.time == 0),
-            onLongPress: _handleLongPress,
-            onTap: () => _handleEventOnTap(event),
+          return new Card(
+            child: new ListTile(
+              title: new EventWidget(event: event),
+              // subtitle: new Divider(color: Colors.grey, height: 2.0),
+              selected: _selected == event.time,
+              onTap: () => _handleEventOnTap(event),
+            ),
           );
         }).toList(),
       ),

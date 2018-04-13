@@ -59,8 +59,8 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   Encounter encounter;
-  final GlobalKey<ScaffoldState> _globalScaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _globalScaffoldKey =
+  //     new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +157,7 @@ class _MainScreenState extends State<MainScreen> {
       context,
       new MaterialPageRoute(
         builder: (context) {
-          return new EncounterScreen(scaffoldKey: _globalScaffoldKey, enc: encounter);
+          return new EncounterScreen(enc: encounter);
         },
       ),
     );
