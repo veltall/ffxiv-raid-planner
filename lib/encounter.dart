@@ -144,19 +144,21 @@ class _EncounterScreenState extends State<EncounterScreen> {
           ),
         ),
       ),
-      body: new ListView(
-        itemExtent: 98.0,
-        padding: const EdgeInsets.only(left: 8.0, top: 16.0),
-        children: widget.enc.timeline.map((event) {
-          return new Card(
-            child: new ListTile(
-              title: new EventWidget(event: event),
-              // subtitle: new Divider(color: Colors.grey, height: 2.0),
-              selected: _selected == event.time,
-              onTap: () => _handleEventOnTap(event),
-            ),
-          );
-        }).toList(),
+      body: new Scrollbar(
+        child: new ListView(
+          itemExtent: 98.0,
+          padding: const EdgeInsets.only(left: 8.0, top: 16.0),
+          children: widget.enc.timeline.map((event) {
+            return new Card(
+              child: new ListTile(
+                title: new EventWidget(event: event),
+                // subtitle: new Divider(color: Colors.grey, height: 2.0),
+                selected: _selected == event.time,
+                onTap: () => _handleEventOnTap(event),
+              ),
+            );
+          }).toList(),
+        ),
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: null,
