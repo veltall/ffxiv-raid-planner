@@ -145,7 +145,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
         addAutomaticKeepAlives: false,
         padding: const EdgeInsets.only(left: 8.0),
         children: widget.enc.timeline.map((event) {
-          return ListTile(
+          return new ListTile(
             title: new EventWidget(event: event),
             subtitle: new Divider(color: Colors.grey, height: 2.0),
             selected: (event.time == 0),
