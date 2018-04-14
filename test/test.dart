@@ -1,20 +1,19 @@
+import 'package:jaguar_serializer/jaguar_serializer.dart';
+import 'package:ffxiv_raid_planner/model/user.dart';
+
+
 void main() {
-  List<int> a = <int>[];
-  a.add(1);
-  a.add(2);
-  a.add(3);
-  a.add(4);
-  a.add(5);
-  int end = a.length > 10 ? 10 : a.length;
-  print("a = $a");
-  List<int> b = a.sublist(0, end);
-  print("b = $b");
-  List<int> c = a.sublist(0, end);
-  print("c = $c");
-  print("a[4] = ${a[4]}");
-  var d = a.sublist(0,0);
-  print('a.sublist(0,0) = $d');
-  int sec = 723;
-  Duration time = new Duration(seconds: sec);
-  print("${time.inMinutes}:${(time.inSeconds-time.inMinutes*60).toString().padLeft(2,'0')}");
+  final userSerializer = new UserJsonSerializer();
+
+  User user = userSerializer.fromMap({
+    'name': 'John',
+    'age': 25
+  });
+
+  print(userSerializer.toMap(user));
+
+  final jsonRepository = new JsonRepo()..add(new UserJsonSerializer());
+  User user2 = jsonRepository.deserialize('{"name":"John","age": 25}', type: User);
+  // User luser = jsonRepository.deserialize("{'name':'John','age': 25}", type: User);
+  print(jsonRepository.serialize(user2));
 }

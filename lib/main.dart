@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'ffxiv_ability.dart';
 import 'encounter.dart';
 
 /*
@@ -9,20 +8,22 @@ import 'encounter.dart';
  *
  * */
 
+
+//TODO:
 void main() => runApp(new RaidPlannerApp());
 
 const kAsset1 = 'res/images/icons/FFVI-Suplex.png';
 const kAsset2 = 'res/images/icons/kefka.png';
 
 class RaidPlannerApp extends StatelessWidget {
-  final _title = "FFXIV Raid Planner Tool";
+  final _title = "FFXIV Raid Planner";
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: _title,
       theme: new ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
       home: new Scaffold(
         appBar: new AppBar(
