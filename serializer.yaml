@@ -1,2 +1,3 @@
 serializers:
   - lib/model/user.dart
+  - lib/model/address.dart

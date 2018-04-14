@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'ffxiv_ability.dart';
 
 class Response {
+  final Duration recasttime = new Duration(seconds: 90);
   final List<Ability> actions = <Ability>[];
   final int time;
 
