@@ -20,6 +20,7 @@ abstract class _$AbilityJsonSerializer implements Serializer<Ability> {
       setNullableValue(ret, 'level', model.level);
       setNullableValue(ret, 'recast_time', model.recastTime);
       setNullableValue(ret, 'help', model.help);
+      setNullableValue(ret, 'action_category', model.actionCategory);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
@@ -36,8 +37,9 @@ abstract class _$AbilityJsonSerializer implements Serializer<Ability> {
     obj.icon = map['icon'] as String;
     obj.id = map['id'] as int;
     obj.level = map['level'] as int;
-    obj.recastTime = map['recast_time'] as double;
+    obj.recastTime = map['recast_time'] as num;
     obj.help = map['help'] as String;
+    obj.actionCategory = map['action_category'] as int;
     return obj;
   }
 

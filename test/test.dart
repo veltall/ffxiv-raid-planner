@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import 'package:ffxiv_raid_planner/model/user.dart';
 import 'package:ffxiv_raid_planner/model/ability.dart';
+import 'package:ffxiv_raid_planner/model/user.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';

@@ -23,7 +23,7 @@ class RaidPlannerApp extends StatelessWidget {
     return new MaterialApp(
       title: _title,
       theme: new ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       home: new Scaffold(
         appBar: new AppBar(
@@ -50,7 +50,7 @@ class RaidPlannerApp extends StatelessWidget {
         ),
         body: new MainScreen(),
         floatingActionButton: new FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).backgroundColor,
           child: new Icon(Icons.list),
           elevation: 13.0,
           onPressed: null,

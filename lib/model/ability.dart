@@ -6,6 +6,7 @@ part 'ability.g.dart';
   fields: const {
     'classjobCategory': const EnDecode(alias: 'classjob_category'),
     'recastTime': const EnDecode(alias: 'recast_time'),
+    'actionCategory': const EnDecode(alias: 'action_category'),
   }
 )
 class AbilityJsonSerializer extends Serializer<Ability> with _$AbilityJsonSerializer {
@@ -17,6 +18,7 @@ class Ability {
   String icon;
   int id;
   int level;
-  double recastTime;
+  num recastTime;
   String help;
+  int actionCategory;
 }
