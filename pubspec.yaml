@@ -31,11 +31,15 @@ flutter:
   assets:
     - res/images/icons/FFVI-Suplex.png
     - res/images/icons/kefka.png
-    - res/images/icons/skills/rampart.png
-    - res/images/icons/skills/vengeance.png
-    - res/images/icons/skills/holmgang.png
-    - res/images/icons/skills/rawintuition.png
-    - res/images/icons/skills/convalescence.png
+    - res/images/icons/abilities/rampart.png
+    - res/images/icons/abilities/vengeance.png
+    - res/images/icons/abilities/holmgang.png
+    - res/images/icons/abilities/rawintuition.png
+    - res/images/icons/abilities/convalescence.png
+    - res/images/icons/encounters/Sigmascape_V1.0.png
+    - res/images/icons/encounters/Sigmascape_V2.0.png
+    - res/images/icons/encounters/Sigmascape_V3.0.png
+    - res/images/icons/encounters/Sigmascape_V4.0.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

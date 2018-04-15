@@ -14,6 +14,10 @@ void main() => runApp(new RaidPlannerApp());
 
 const kAsset1 = 'res/images/icons/FFVI-Suplex.png';
 const kAsset2 = 'res/images/icons/kefka.png';
+const bAsset1 = 'res/images/icons/encounters/Sigmascape_V1.0.png';
+const bAsset2 = 'res/images/icons/encounters/Sigmascape_V2.0.png';
+const bAsset3 = 'res/images/icons/encounters/Sigmascape_V3.0.png';
+const bAsset4 = 'res/images/icons/encounters/Sigmascape_V4.0.png';
 
 class RaidPlannerApp extends StatelessWidget {
   final _title = "FFXIV Raid Planner";
@@ -71,61 +75,126 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return new ListView(
-      padding: const EdgeInsets.only(top: 16.0, left: 8.0),
+      itemExtent: 132.0,
+      padding: const EdgeInsets.only(top: 16.0, left: 8.0, right: 8.0),
       children: <Widget>[
-        // o5s
-        new ListTile(
-          title: new Text('Sigmascape V1.0 (Savage)'),
-          leading: new CircleAvatar(
-            backgroundImage: new AssetImage(kAsset1),
+        new Card(
+          child: new Container(
+            padding: const EdgeInsets.only(top: 40.0),
+            decoration: new BoxDecoration(image: new DecorationImage(
+              colorFilter: new ColorFilter.mode(Color(0x5F000000), BlendMode.overlay),
+              fit: BoxFit.fitWidth,
+              image: new AssetImage(bAsset1))),
+            child: new ListTile(
+              title: new Text('Sigmascape V1.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+              subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+              leading: new CircleAvatar(
+                child: new Text("o5"),
+              ),
+            ),
           ),
         ),
         // o6s
-        new ListTile(
-          title: new Text('Sigmascape V2.0 (Savage)'),
-          leading: new CircleAvatar(
-            child: new Text('o6s'),
+        new Card(
+          child: new Container(
+            padding: const EdgeInsets.only(top: 40.0),
+            decoration: new BoxDecoration(image: new DecorationImage(
+              colorFilter: new ColorFilter.mode(Color(0x8F000000), BlendMode.overlay),
+              fit: BoxFit.fitWidth,
+              image: new AssetImage(bAsset2))),
+            child: new ListTile(
+              title: new Text('Sigmascape V2.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+              subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+              leading: new CircleAvatar(
+                child: new Text('o6'),
+              ),
+            ),
           ),
         ),
         // o7s
-        new ListTile(
-          title: new Text('Sigmascape V3.0 (Savage)'),
-          leading: new CircleAvatar(
-            child: new Text('o7s'),
+        new Container(
+          padding: const EdgeInsets.only(top: 40.0),
+          decoration: new BoxDecoration(image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Color(0xCF000000), BlendMode.overlay),
+            fit: BoxFit.fitWidth,
+            image: new AssetImage(bAsset3))),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new ListTile(
+            title: new Text('Sigmascape V3.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+            subtitle: const Text('Author: ranji', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+            leading: new CircleAvatar(
+              child: new Text('o7'),
+            ),
           ),
         ),
         // o8s
-        new ListTile(
-          title: new Text('Sigmascape V4.0 (Savage)'),
-          leading: new CircleAvatar(
-            backgroundColor: Colors.white,
-            backgroundImage: new AssetImage(kAsset2),
+        new Container(
+          padding: const EdgeInsets.only(top: 40.0),
+          decoration: new BoxDecoration(image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Color(0x3F000000), BlendMode.overlay),
+            fit: BoxFit.fitWidth,
+            image: new AssetImage(bAsset4))),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new ListTile(
+            title: new Text('Sigmascape V4.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+            subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+            leading: new CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: new AssetImage(kAsset2),
+            ),
+            onTap: () => _goToV4(context),
           ),
-          onTap: () => _goToV4(context),
         ),
-        new ListTile(
-          title: new Text('Sigmascape V4.0 (Savage)'),
-          leading: new CircleAvatar(
-            backgroundColor: Colors.white,
-            backgroundImage: new AssetImage(kAsset2),
+        new Container(
+          padding: const EdgeInsets.only(top: 40.0),
+          decoration: new BoxDecoration(image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Color(0x3F000000), BlendMode.overlay),
+            fit: BoxFit.fitWidth,
+            image: new AssetImage(bAsset4))),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new ListTile(
+            title: new Text('Sigmascape V4.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+            subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+            leading: new CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: new AssetImage(kAsset2),
+            ),
+            onTap: () => _goToV4(context),
           ),
-          onTap: () => _goToV4(context),
         ),
-        new ListTile(
-          title: new Text('Sigmascape V4.0 (Savage)'),
-          leading: new CircleAvatar(
-            backgroundColor: Colors.white,
-            backgroundImage: new AssetImage(kAsset2),
+        new Container(
+          padding: const EdgeInsets.only(top: 40.0),
+          decoration: new BoxDecoration(image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Color(0x3F000000), BlendMode.overlay),
+            fit: BoxFit.fitWidth,
+            image: new AssetImage(bAsset4))),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new ListTile(
+            title: new Text('Sigmascape V4.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+            subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+            leading: new CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: new AssetImage(kAsset2),
+            ),
+            onTap: () => _goToV4(context),
           ),
-          onTap: () => _goToV4(context),
         ),
-        new ListTile(
-          title: new Text('Sigmascape V4.0 (Savage)'),
-          leading: new CircleAvatar(
-            backgroundColor: Colors.white,
-            backgroundImage: new AssetImage(kAsset2),
+        new Container(
+          padding: const EdgeInsets.only(top: 40.0),
+          decoration: new BoxDecoration(image: new DecorationImage(
+            colorFilter: new ColorFilter.mode(Color(0x3F000000), BlendMode.overlay),
+            fit: BoxFit.fitWidth,
+            image: new AssetImage(bAsset4))),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new ListTile(
+            title: new Text('Sigmascape V4.0 (Savage)', style: new TextStyle(color: Colors.white, fontSize: 20.0),),
+            subtitle: const Text('Author: velt', style: const TextStyle(color: Colors.white70, fontSize: 15.0, fontStyle: FontStyle.italic),),
+            leading: new CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: new AssetImage(kAsset2),
+            ),
+            onTap: () => _goToV4(context),
           ),
-          onTap: () => _goToV4(context),
         ),
       ],
     );

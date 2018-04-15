@@ -27,16 +27,13 @@ void main() async {
     String url = db[index]['icon'];
     String name = db[index]['name'];
     RegExp spaceSelector = new RegExp(r"[\s|']+");
-    String filename = '../res/images/icons/abilities/' +
+    String filename = '../../res/images/icons/abilities/' +
       name.replaceAll(spaceSelector, "").toLowerCase() +
       ".png";
       print('processing skill $name at $url, saving to $filename');
     await downloadItem(url, jsonRepo, filename);
     index++;
   }
-
-  
-
 }
 
 Future<Null> downloadItem(String url, JsonRepo jsonRepo, String filename) async {
