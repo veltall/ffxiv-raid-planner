@@ -1,7 +1,9 @@
-/// This script browses xivdb.com and 
-/// retrieves all the datafiles 
+/// This script browses xivdb.com and
+/// retrieves all the datafiles
 /// for actions in FFXIV
 
+/// TODO: look into using android_alarm_manager plugin for Dart
+/// to manage rate limit when querying db
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,40 +12,41 @@ import 'package:ffxiv_raid_planner/model/ability.dart';
 import 'dart:io';
 import 'dart:async';
 
-void main() {
-  var id = 1;
-  int limit = 5;
-  int goal = 48;
-  var url = 'https://api.xivdb.com/action/';
-  final AbilityJsonSerializer abilityJsonSerializer = new AbilityJsonSerializer();
+void main() async {
+  final AbilityJsonSerializer abilityJsonSerializer =
+      new AbilityJsonSerializer();
   final JsonRepo jsonRepo = new JsonRepo()..add(abilityJsonSerializer);
-  Ability ability;
-  RegExp spaceSelector = new RegExp(r"[\s|']+");
-  downloadStuff(url, id, ability, jsonRepo, spaceSelector, limit, goal);
+
+  String searchdb = new File('../res/db/ability-search.json').readAsStringSync(); 
+  var db = json.decode(searchdb);
+  
+  int index = 0;
+  int goal = db.length;
+  while (index < db.length) {
+    print('processing item $index/$goal');
+    String url = db[index]['icon'];
+    String name = db[index]['name'];
+    RegExp spaceSelector = new RegExp(r"[\s|']+");
+    String filename = '../res/images/icons/abilities/' +
+      name.replaceAll(spaceSelector, "").toLowerCase() +
+      ".png";
+      print('processing skill $name at $url, saving to $filename');
+    await downloadItem(url, jsonRepo, filename);
+    index++;
+  }
+
+  
+
 }
 
-void downloadStuff(String url, int id, Ability ability, JsonRepo jsonRepo, RegExp spaceSelector, int limit, int goal){
-  print('downloading item $id of $limit');
-  http.read(url+"$id").then((dataString) {
-    if (json.decode(dataString)["error"] == null) {
-      ability = jsonRepo.deserialize(dataString, type: Ability);
-      print("Processing ${ability.name}..");
-      var writeString = jsonRepo.serialize(ability);
-      String filename = '../res/db/' + ability.name.replaceAll(spaceSelector, "").toLowerCase()+".json";
-      new File(filename).writeAsStringSync(writeString);
-    } else {
-      print(json.decode(dataString)["error"]);
-    }
+Future<Null> downloadItem(String url, JsonRepo jsonRepo, String filename) async {
+  print('received download request for $url');
+  await http.readBytes(url).then((data) {
+    // if (json.decode(data)["error"] == null) {
+      // Ability ability = jsonRepo.deserialize(data, type: Ability);
+      // print("Processing ${ability.name}");
+      // var writeString = jsonRepo.serialize(ability);
+      new File(filename).writeAsBytesSync(data);
+    // } else print(json.decode(data)["error"]);
   });
-  id++;
-  if(id < limit) {
-    downloadStuff(url, id, ability, jsonRepo, spaceSelector, limit, goal);
-  } else if(limit < goal) {
-    print('done one batch, sleeping a bit');
-    sleep(new Duration(seconds: 2));
-    downloadStuff(url, id, ability, jsonRepo, spaceSelector, limit+=5, goal);
-  } else {
-    sleep(new Duration(seconds: 2));
-    return;
-  }
 }
