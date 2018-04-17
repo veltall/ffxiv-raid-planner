@@ -1,5 +1,5 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import 'package:ffxiv_raid_planner/model/ability.dart';
+import 'package:ffxiv_raid_planner/model/json_ability.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
@@ -10,9 +10,9 @@ void main() {
   String dataString = dataFile.readAsStringSync();
 
   // deserialize string into object
-  final abilitySerializer = new AbilityJsonSerializer();
+  final abilitySerializer = new JsonAbilitySerializer();
   final jsonRepository = new JsonRepo()..add(abilitySerializer);
-  final Ability dataObj = jsonRepository.deserialize(dataString, type: Ability);
+  final JsonAbility dataObj = jsonRepository.deserialize(dataString, type: JsonAbility);
   // test result of deserialization
   print("Deserialized file content into object.");
   print("Ability.name = ${dataObj.name}");

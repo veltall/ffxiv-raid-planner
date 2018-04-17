@@ -90,11 +90,11 @@ class _ResponseScreenState extends State<ResponseScreen> {
 
   @override
   void initState() {
-    allSkills.add(new Ability(name: "Convalescence", duration: new Duration(seconds: 20), recast: new Duration(seconds: 120)));
-    allSkills.add(new Ability(name: "Holmgang", duration: new Duration(seconds: 6), recast: new Duration(seconds: 180)));
-    allSkills.add(new Ability(name: "Rampart", duration: new Duration(seconds: 20), recast: new Duration(seconds: 90)));
-    allSkills.add(new Ability(name: "Raw Intuition", duration: new Duration(seconds: 20), recast: new Duration(seconds: 90)));
-    allSkills.add(new Ability(name: "Vengeance", duration: new Duration(seconds: 15), recast: new Duration(seconds: 120)));
+    allSkills.add(new Ability(name: "Convalescence", recast: 120));
+    allSkills.add(new Ability(name: "Holmgang", recast: 180));
+    allSkills.add(new Ability(name: "Rampart", recast: 90));
+    allSkills.add(new Ability(name: "Raw Intuition", recast: 90));
+    allSkills.add(new Ability(name: "Vengeance", recast: 120));
     super.initState();
   }
 

@@ -9,10 +9,9 @@ class Ability {
 
   // public identity data
   String name;
-  Duration recast; // in milliseconds
-  Duration duration;
-  String job;
-  String effect;
+  int recast; // in milliseconds
+  String classjob;
+  String help;
 
   // local data
   String iconPath;
@@ -20,13 +19,11 @@ class Ability {
 
   Ability({
       @required this.name,
-      @required this.duration,
       @required this.recast,
-      this.job,
-      this.effect}) {
+      this.classjob,
+      this.help}) {
     // required named parameters
     assert(this.name != null);
-    assert(this.duration != null);
     assert(this.recast != null);
     // icon's filename has no spaces, apostrophes, and is all lowercase
     RegExp spaceSelector = new RegExp(r"[\s|']+");
@@ -50,7 +47,7 @@ class Ability {
   bool isInEffectAt({@required int time}) {
     int useTime = _history.lastKeyBefore(time);
     bool isInEffect = false;
-    if (useTime != null && useTime + recast.inSeconds > time) {
+    if (useTime != null && useTime + recast > time) {
       isInEffect = true;
     } // else remains false
     return isInEffect;
@@ -64,7 +61,7 @@ class Ability {
     int overlap = 0 - now;
     int prev = _history.lastKeyBefore(now);
     if (prev != null) {
-      overlap = prev + recast.inSeconds - now;
+      overlap = prev + recast - now;
     }
     return overlap;
   }
@@ -74,7 +71,7 @@ class Ability {
     int next = _history.firstKeyAfter(now);
     // print('debug $name next = $next');
     if (next != null) {
-      overlap = now - (next - recast.inSeconds);
+      overlap = now - (next - recast);
     }
     return overlap;
   }
@@ -178,19 +175,13 @@ class DetailedAbilityWidget extends StatelessWidget {
               ),
               new Row(
                 children: <Widget>[
-                  new Icon(Icons.timer_3),
-                  new Text(ability.duration.toString()),
-                ],
-              ),
-              new Row(
-                children: <Widget>[
                   new Icon(Icons.history),
-                  new Text(ability.recast.inSeconds.toString())
+                  new Text(ability.recast.toString())
                 ],
               ),
             ],
           ),
-          new Text(ability.effect),
+          new Text(ability.help),
         ],
       ),
     );

@@ -13,6 +13,7 @@ class Encounter {
   final List<Ability> pinned = <Ability>[];
   EncounterWidget widget;
   EncounterScreen view;
+  final String _bgDir = 'res/images/icons/encounters/';
 
   Encounter({
     @required this.title,
@@ -44,8 +45,7 @@ class Encounter {
 
   void _buildWidget() {
     String encName = this.title;
-    String bgImage =
-        encName.replaceAll('db', 'images').replaceAll('json', 'png');
+    String bgImage = _bgDir + encName.replaceAll(' ', '_') + '.png';
     String avatar = bgImage.replaceAll('.png', '_avatar.png');
     this.widget = new EncounterWidget(
       enc: this,
@@ -55,7 +55,7 @@ class Encounter {
   }
 
   void _buildScreen() {
-    new EncounterScreen(enc: this);
+    this.view = new EncounterScreen(enc: this);
   }
 
   void buildPinned() {}
@@ -118,6 +118,7 @@ class EncounterWidget extends StatelessWidget {
                     fontStyle: FontStyle.italic),
               ),
               leading: new CircleAvatar(
+                backgroundColor: Colors.white,
                 child: (avatar == null)
                     ? new Text(enc.title.substring(10, 13).toLowerCase())
                     : new Image.asset(avatar),
@@ -126,44 +127,6 @@ class EncounterWidget extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  _goToV4(BuildContext context) {
-    // building data
-    List<Map<String, String>> events = new List.generate(240, (index) {
-      Map<String, String> event = new Map<String, String>();
-      int time = index * 3;
-      event['time'] = time.toString();
-      if (time % 11 == 0) {
-        event['title'] = 'Raidwide';
-        event['desc'] = 'Moderate, unavoidable AoE damage';
-      } else if (time % 45 == 0) {
-        event['title'] = 'Tank-Buster';
-        event['desc'] = 'Heavy, single-hit damage';
-      } else if (time % 39 == 0) {
-        event['title'] = 'Targeted';
-        event['desc'] = 'Heavy, avoidable AoE damage';
-      } else {
-        event['title'] = 'Auto-Attack';
-        event['desc'] = 'Weak, continuous damage';
-      }
-      return event;
-    });
-
-    Encounter encounter = new Encounter(
-      title: 'Sigmascape V4.0 (Savage)',
-      author: "Velt Krapfenwald'l",
-      enrage: 720,
-      timelineData: events,
-    );
-    Navigator.push(
-      context,
-      new MaterialPageRoute(
-        builder: (context) {
-          return new EncounterScreen(enc: encounter);
-        },
       ),
     );
   }
@@ -212,31 +175,27 @@ class _EncounterScreenState extends State<EncounterScreen> {
                   new AbilityWidget(
                     ability: new Ability(
                       name: 'Rampart',
-                      duration: new Duration(seconds: 20),
-                      recast: new Duration(seconds: 90),
+                      recast: 90,
                     ),
                     now: i,
                   ),
                   new AbilityWidget(
                     ability: new Ability(
                       name: 'Raw Intuition',
-                      duration: new Duration(seconds: 20),
-                      recast: new Duration(seconds: 90),
+                      recast: 90,
                     ),
                     now: i,
                   ),
                   new AbilityWidget(
                     ability: new Ability(
                       name: 'Convalescence',
-                      duration: new Duration(seconds: 20),
-                      recast: new Duration(seconds: 120),
+                      recast: 90,
                     ),
                     now: i,
                   ),
                   new AbilityWidget(
                     ability: new Ability(
-                      duration: new Duration(seconds: 6),
-                      recast: new Duration(seconds: 180),
+                      recast: 180,
                       name: "Holmgang",
                     ),
                     now: i,

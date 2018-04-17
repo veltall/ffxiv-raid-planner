@@ -5,6 +5,10 @@ import 'dart:io';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
+// serialization
+import 'model/json_encounter.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
+
 /*
  * TODO:
  * Investigate the use of a Stepper Widget for 
@@ -21,8 +25,6 @@ const bAsset1 = 'res/images/icons/encounters/Sigmascape_V1.0_(Savage).png';
 const bAsset2 = 'res/images/icons/encounters/Sigmascape_V2.0_(Savage).png';
 const bAsset3 = 'res/images/icons/encounters/Sigmascape_V3.0_(Savage).png';
 const bAsset4 = 'res/images/icons/encounters/Sigmascape_V4.0_(Savage).png';
-
-const datapath = 'res/db/encounters/Sigmascape_V1.0_(Savage).json';
 
 class RaidPlannerApp extends StatelessWidget {
   final _title = "FFXIV Raid Planner";
@@ -76,92 +78,51 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Encounter encounter;
-  List<Encounter> encs = <Encounter>[];
+  List<Encounter> encounters = <Encounter>[];
 
   @override
   void initState() {
     super.initState();
-    _readO5Data();
-    encs.add(new Encounter(
-      title: "Sigmascape V2.0 (Savage)",
-      author: "Ranji Suckass",
-      enrage: 660,
-      timelineData: [],
-    ));
-    encs.add(new Encounter(
-      title: "Sigmascape V3.0 (Savage)",
-      author: "Velt Krapfenwald'l",
-      enrage: 690,
-      timelineData: [],
-    ));
-    encs.add(new Encounter(
-      title: "Sigmascape V4.0 (Savage)",
-      author: "Velt Krapfenwald'l",
-      enrage: 720,
-      timelineData: [],
-    ));
+    var encLoader = <Encounter>[];
+    _loadData(encLoader).then((encs) => setState(() => encounters = encs));
   }
 
-  void _readO5Data() async {
-    String dataString = await rootBundle.loadString(datapath);
-    // print(dataString);
+  Future<List<Encounter>> _loadData(List<Encounter> encs) async {
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V2.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V3.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    return encs;
+  }
+
+  Future<Null> _readEncounterData(List<Encounter> encs, String sourcePath) async {
+    String dataString = await rootBundle.loadString(sourcePath);
     Map encMap = json.decode(dataString);
-    print(encMap["timeline"][49]);
-    print(encMap["enrage"] is int);
-    String title = encMap["title"];
-    String author = encMap["author"];
-    int enrage = encMap["enrage"];
-    List timeline = encMap["timeline"];
-    print("title is String: ${title is String}");
-    print("timeline is List: ${timeline is List}");
-    print("enrage is int: ${enrage is int}");
-
-    /// TODO: The following assignment is problematic
-    /// because timeline is a List<dynamic> and timelineData
-    /// is strictly a List<Map<String,String>>
-    /// To solve this problem, we need to use jaguar serializer
-    /// for Encounter, or manually transfer the data over.
-
-    // setState(() {
-      // encs.add(
-      //   new Encounter(
-      //     title: title,
-      //     author: author,
-      //     enrage: enrage,
-      //     timelineData: timeline,
-      //   ),
-      // );
-    // });
+    final jsonEncounterSerializer = new JsonEncounterSerializer();
+    final JsonEncounter enc = jsonEncounterSerializer.fromMap(encMap);
+    setState(() {
+      encs.add(
+        new Encounter(
+          title: enc.title,
+          author: enc.author,
+          enrage: enc.enrage,
+          timelineData: enc.timelineData,
+        ),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    List<String> bgImgs = <String>[bAsset1, bAsset2, bAsset3, bAsset4];
     return new ListView(
       itemExtent: 132.0,
-      padding: const EdgeInsets.only(top: 16.0, left: 8.0, right: 8.0),
-      children: <Widget>[
-        new EncounterWidget(
-          enc: encs[0],
-          avatar: null,
-          backgroundImage: bAsset1,
-        ),
-        new EncounterWidget(
-          enc: encs[1],
-          avatar: null,
-          backgroundImage: bAsset2,
-        ),
-        new EncounterWidget(
-          enc: encs[2],
-          avatar: null,
-          backgroundImage: bAsset3,
-        ),
-        // new EncounterWidget(
-        //   enc: encs[3],
-        //   avatar: kAsset2,
-        //   backgroundImage: bAsset4,
-        // ),
-      ],
+      children: encounters.map((enc) {
+        return enc.widget;
+      }).toList(),
     );
   }
 }

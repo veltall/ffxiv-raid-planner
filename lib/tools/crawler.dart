@@ -8,14 +8,14 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import 'package:ffxiv_raid_planner/model/ability.dart';
+import 'package:ffxiv_raid_planner/model/json_ability.dart';
 import 'dart:io';
 import 'dart:async';
 
 void main() async {
-  final AbilityJsonSerializer abilityJsonSerializer =
-      new AbilityJsonSerializer();
-  final JsonRepo jsonRepo = new JsonRepo()..add(abilityJsonSerializer);
+  final JsonAbilitySerializer jsonAbilitySerializer =
+      new JsonAbilitySerializer();
+  final JsonRepo jsonRepo = new JsonRepo()..add(jsonAbilitySerializer);
 
   String searchdb = new File('../res/db/ability-search.json').readAsStringSync(); 
   var db = json.decode(searchdb);

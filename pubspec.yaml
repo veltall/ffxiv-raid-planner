@@ -45,10 +45,9 @@ flutter:
     - res/images/icons/encounters/Sigmascape_V3.0_(Savage)_avatar.png
     - res/images/icons/encounters/Sigmascape_V4.0_(Savage)_avatar.png
     - res/db/encounters/Sigmascape_V1.0_(Savage).json
-    - file.json
-    - lib/file.json
-    - assets/file.json
-    - res/db/ability-search.json
+    - res/db/encounters/Sigmascape_V2.0_(Savage).json
+    - res/db/encounters/Sigmascape_V3.0_(Savage).json
+    - res/db/encounters/Sigmascape_V4.0_(Savage).json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

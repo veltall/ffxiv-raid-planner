@@ -1,6 +1,6 @@
-library example.ability;
+library raidplanner.ability;
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-part 'ability.g.dart';
+part 'json_ability.g.dart';
 
 @GenSerializer(
   fields: const {
@@ -9,16 +9,16 @@ part 'ability.g.dart';
     'actionCategory': const EnDecode(alias: 'action_category'),
   }
 )
-class AbilityJsonSerializer extends Serializer<Ability> with _$AbilityJsonSerializer {
-  Ability createModel() => new Ability();
+class JsonAbilitySerializer extends Serializer<JsonAbility> with _$JsonAbilitySerializer {
+  JsonAbility createModel() => new JsonAbility();
 }
-class Ability {
+class JsonAbility {
   String name;
+  num recastTime;
   String classjobCategory;
+  String help;
   String icon;
   int id;
   int level;
-  num recastTime;
-  String help;
   int actionCategory;
 }
