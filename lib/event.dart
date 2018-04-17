@@ -41,17 +41,17 @@ class _EventWidgetState extends State<EventWidget> {
 
   IconData _getAvatar() {
     IconData avatar = Icons.error;
-    switch (widget.event.title) {
-      case "Auto-Attack":
-        avatar = Icons.loop;
+    switch (widget.event.desc) {
+      case "Stack AoE":
+        avatar = Icons.arrow_downward;
         break;
-      case "Tank-Buster":
+      case "Tank Buster":
         avatar = Icons.directions_bus;
         break;
-      case "Raidwide":
+      case "Raidwide AoE":
         avatar = Icons.flare;
         break;
-      case "Targeted":
+      case "Spread AoE":
         avatar = Icons.lens;
         break;
       default:
@@ -79,14 +79,14 @@ class _EventWidgetState extends State<EventWidget> {
               children: <Widget>[
                 new CircleAvatar(
                   child: new Icon(avatar),
-                  backgroundColor: (widget.event.title == "Raidwide")
+                  backgroundColor: (widget.event.desc == "Raidwide AoE")
                       ? Colors.amber
                       : Colors.transparent,
-                  foregroundColor: (widget.event.title == "Raidwide")
+                  foregroundColor: (widget.event.desc == "Raidwide AoE")
                       ? Colors.white
                       : Colors.red,
                 ),
-                Padding(
+                new Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +99,7 @@ class _EventWidgetState extends State<EventWidget> {
                           fontSize: 18.0,
                         ),
                       ),
-                      Row(
+                      new Row(
                         children: <Widget>[
                           // new Icon(Icons.av_timer),
                           // new Icon(Icons.timer),
@@ -119,13 +119,6 @@ class _EventWidgetState extends State<EventWidget> {
               ],
             ),
           ),
-          // new ListTile(
-          //   leading: new CircleAvatar(
-          //     child: new Icon(avatar),
-          //   ),
-          //   title: new Text(widget.event.title),
-          //   subtitle: new Text(widget.event.desc),
-          // ),
           new ResponseWidget(response: widget.event.res),
         ],
         mainAxisSize: MainAxisSize.max,

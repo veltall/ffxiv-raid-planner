@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'encounter.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
 // serialization
 import 'model/json_encounter.dart';
-import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 /*
  * TODO:
@@ -18,13 +16,6 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 //TODO:
 void main() => runApp(new RaidPlannerApp());
-
-const kAsset1 = 'res/images/icons/FFVI-Suplex.png';
-const kAsset2 = 'res/images/icons/kefka.png';
-const bAsset1 = 'res/images/icons/encounters/Sigmascape_V1.0_(Savage).png';
-const bAsset2 = 'res/images/icons/encounters/Sigmascape_V2.0_(Savage).png';
-const bAsset3 = 'res/images/icons/encounters/Sigmascape_V3.0_(Savage).png';
-const bAsset4 = 'res/images/icons/encounters/Sigmascape_V4.0_(Savage).png';
 
 class RaidPlannerApp extends StatelessWidget {
   final _title = "FFXIV Raid Planner";
@@ -87,6 +78,7 @@ class _MainScreenState extends State<MainScreen> {
     _loadData(encLoader).then((encs) => setState(() => encounters = encs));
   }
 
+  // TODO: Scan directory and load all available assets
   Future<List<Encounter>> _loadData(List<Encounter> encs) async {
     await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
     await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V2.0_(Savage).json');
@@ -99,7 +91,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<Null> _readEncounterData(List<Encounter> encs, String sourcePath) async {
-    String dataString = await rootBundle.loadString(sourcePath);
+    String dataString = await rootBundle.loadString(sourcePath, cache: false);
     Map encMap = json.decode(dataString);
     final jsonEncounterSerializer = new JsonEncounterSerializer();
     final JsonEncounter enc = jsonEncounterSerializer.fromMap(encMap);
@@ -117,9 +109,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> bgImgs = <String>[bAsset1, bAsset2, bAsset3, bAsset4];
     return new ListView(
       itemExtent: 132.0,
+      padding: const EdgeInsets.all(8.0),
       children: encounters.map((enc) {
         return enc.widget;
       }).toList(),
