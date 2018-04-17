@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'encounter.dart';
-import 'dart:convert';
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
 // serialization
 import 'model/json_encounter.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 /*
  * TODO:
@@ -92,9 +92,9 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<Null> _readEncounterData(List<Encounter> encs, String sourcePath) async {
     String dataString = await rootBundle.loadString(sourcePath, cache: false);
-    Map encMap = json.decode(dataString);
     final jsonEncounterSerializer = new JsonEncounterSerializer();
-    final JsonEncounter enc = jsonEncounterSerializer.fromMap(encMap);
+    final jsonRepo = new JsonRepo()..add(jsonEncounterSerializer);
+    final JsonEncounter enc = jsonRepo.deserialize(dataString, type: JsonEncounter);
     setState(() {
       encs.add(
         new Encounter(
