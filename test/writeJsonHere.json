@@ -1,1 +1,20 @@
-{"name":"Aspected Benefic","classjob_category":"AST","icon":"https://secure.xivdb.com/img/game/003000/003127.png","id":3595,"level":69,"recast_time":90,"help":"Restores target's HP.\nCure Potency: 200\nDiurnal Sect Effect: Regen\nCure Potency: 140\nDuration: 18s\nEffect cannot be stacked. Nocturnal Sect Effect: Erects a magicked barrier which nullifies damage equaling 250% the amount of HP restored\nDuration: 30s\nEffect cannot be stacked with Adloquium."}
+{
+  "title": "Sigmascape V1.0 (Savage)",
+  "author": "velt",
+  "enrage": 600,
+  "timeline": [
+    { "time": 1, "title": "--Start--", "desc": "" },
+    { "time": 5, "title": "Boxes", "desc": "" },
+    { "time": 17, "title": "Saintly Beam", "desc": "" },
+    { "time": 29, "title": "Whistle: Knockback", "desc": "Knockback" },
+    { "time": 44, "title": "Doom Strike", "desc": "Tank Buster" },
+    { "time": 54, "title": "Head On", "desc": "Proximity" },
+    { "time": 56, "title": "Aero Marks", "desc": "Spread AoE" },
+    { "time": 66, "title": "Acid Rain", "desc": "Raidwide AoE" },
+    { "time": 77, "title": "Whistle: March", "desc": "" },
+    { "time": 87, "title": "Saintly Beam", "desc": "" },
+    { "time": 97, "title": "Headlamp", "desc": "Stack AoE" },
+    { "time": 113, "title": "Whistle: Tethers + Saintly", "desc": "" },
+    { "time": 138, "title": "Diabolic Light (MT + Healer)", "desc": "" },
+    { "time": 147, "title": "Doom Strike", "desc": "Tank Buster" },
+    { "time": 153, "title": 

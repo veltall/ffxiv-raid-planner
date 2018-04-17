@@ -6,18 +6,24 @@ import 'package:flutter/foundation.dart';
 
 class Encounter {
   final String title;
+  final String author;
   final int enrage; // in seconds
   final List<Map<String, String>> timelineData;
   final List<Event> timeline = <Event>[];
   final List<Ability> pinned = <Ability>[];
+  EncounterWidget widget;
+  EncounterScreen view;
 
   Encounter({
     @required this.title,
+    @required this.author,
     @required this.enrage,
     @required this.timelineData,
   }) {
     buildTimeline();
     buildPinned();
+    _buildWidget();
+    _buildScreen();
   }
 
   void buildTimeline() {
@@ -36,8 +42,134 @@ class Encounter {
     });
   }
 
+  void _buildWidget() {
+    String encName = this.title;
+    String bgImage =
+        encName.replaceAll('db', 'images').replaceAll('json', 'png');
+    String avatar = bgImage.replaceAll('.png', '_avatar.png');
+    this.widget = new EncounterWidget(
+      enc: this,
+      avatar: avatar,
+      backgroundImage: bgImage,
+    );
+  }
+
+  void _buildScreen() {
+    new EncounterScreen(enc: this);
+  }
+
   void buildPinned() {}
 }
+
+// ------------------------------------------
+
+class EncounterWidget extends StatelessWidget {
+  final Encounter enc;
+  final String backgroundImage;
+  final String avatar;
+
+  EncounterWidget({
+    @required this.enc,
+    @required this.backgroundImage,
+    @required this.avatar,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    VoidCallback goToScreen = () {
+      Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) {
+            return enc.view;
+          },
+        ),
+      );
+    };
+    return new Container(
+      decoration: new BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        image: new DecorationImage(
+          fit: BoxFit.fitWidth,
+          image: new AssetImage(backgroundImage),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          new Container(
+            decoration: new BoxDecoration(boxShadow: <BoxShadow>[
+              new BoxShadow(
+                spreadRadius: -10.0, // inset the shadow
+                color: Colors.black54,
+                blurRadius: 10.0,
+              )
+            ]),
+            child: new ListTile(
+              title: new Text(
+                enc.title,
+                style: new TextStyle(color: Colors.white, fontSize: 20.0),
+              ),
+              subtitle: new Text(
+                'Author: ${enc.author}',
+                style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.italic),
+              ),
+              leading: new CircleAvatar(
+                child: (avatar == null)
+                    ? new Text(enc.title.substring(10, 13).toLowerCase())
+                    : new Image.asset(avatar),
+              ),
+              onTap: goToScreen,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _goToV4(BuildContext context) {
+    // building data
+    List<Map<String, String>> events = new List.generate(240, (index) {
+      Map<String, String> event = new Map<String, String>();
+      int time = index * 3;
+      event['time'] = time.toString();
+      if (time % 11 == 0) {
+        event['title'] = 'Raidwide';
+        event['desc'] = 'Moderate, unavoidable AoE damage';
+      } else if (time % 45 == 0) {
+        event['title'] = 'Tank-Buster';
+        event['desc'] = 'Heavy, single-hit damage';
+      } else if (time % 39 == 0) {
+        event['title'] = 'Targeted';
+        event['desc'] = 'Heavy, avoidable AoE damage';
+      } else {
+        event['title'] = 'Auto-Attack';
+        event['desc'] = 'Weak, continuous damage';
+      }
+      return event;
+    });
+
+    Encounter encounter = new Encounter(
+      title: 'Sigmascape V4.0 (Savage)',
+      author: "Velt Krapfenwald'l",
+      enrage: 720,
+      timelineData: events,
+    );
+    Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) {
+          return new EncounterScreen(enc: encounter);
+        },
+      ),
+    );
+  }
+}
+
+// ------------------------------------------
 
 class EncounterScreen extends StatefulWidget {
   // housekeeping
@@ -163,6 +295,7 @@ class _EncounterScreenState extends State<EncounterScreen> {
       floatingActionButton: new FloatingActionButton(
         onPressed: null,
         child: new Icon(Icons.filter_list),
+        heroTag: null,
       ),
     );
   }
