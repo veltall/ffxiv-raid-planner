@@ -54,6 +54,9 @@ class _EventWidgetState extends State<EventWidget> {
       case "Spread AoE":
         avatar = Icons.lens;
         break;
+      case "Lookaway":
+        avatar = Icons.panorama_fish_eye;
+        break;
       default:
         break;
     }
