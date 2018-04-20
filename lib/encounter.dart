@@ -1,3 +1,4 @@
+import 'character.dart';
 import 'response.dart';
 import 'ffxiv_ability.dart';
 import 'event.dart';
@@ -10,10 +11,15 @@ class Encounter {
   final int enrage; // in seconds
   final List<Map<String, String>> timelineData;
   final List<Event> timeline = <Event>[];
-  final List<Ability> pinned = <Ability>[];
+
+  // logic data
+  final List<Character> party = <Character>[];
+
+  // widget data
   EncounterWidget widget;
   EncounterScreen view;
   final String _bgDir = 'res/images/icons/encounters/';
+  final List<Ability> pinned = <Ability>[];
 
   Encounter({
     @required this.title,
@@ -21,13 +27,14 @@ class Encounter {
     @required this.enrage,
     @required this.timelineData,
   }) {
-    buildTimeline();
-    buildPinned();
+    _buildTimeline();
+    _buildPinned();
     _buildWidget();
     _buildScreen();
+    _buildParty();
   }
 
-  void buildTimeline() {
+  void _buildTimeline() {
     // timelineData --> <Timeline>[]
     timelineData.forEach((eventData) {
       int time = int.parse(eventData['time']);
@@ -58,7 +65,26 @@ class Encounter {
     this.view = new EncounterScreen(enc: this);
   }
 
-  void buildPinned() {}
+  void _buildPinned() {}
+
+  void _buildParty() {
+    List<ClassJob> meta = <ClassJob>[
+      ClassJob.PLD,
+      ClassJob.WAR,
+      ClassJob.AST,
+      ClassJob.SCH,
+      ClassJob.DRG,
+      ClassJob.NIN,
+      ClassJob.BRD,
+      ClassJob.MCH
+    ];
+    for (var classjob in meta) {
+      this.party.add(new Character(
+        name: null, // use default name
+        classjob: classjob,
+      )); 
+    }
+  }
 }
 
 // ------------------------------------------
@@ -154,6 +180,10 @@ class _EncounterScreenState extends State<EncounterScreen> {
     _progress = 0.0;
     _selected = -1;
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   void _showBottomSheet(int i) {
     showModalBottomSheet<void>(
@@ -238,12 +268,11 @@ class _EncounterScreenState extends State<EncounterScreen> {
       body: new Scrollbar(
         child: new ListView(
           itemExtent: 98.0,
-          padding: const EdgeInsets.only(left: 8.0, top: 16.0),
+          padding: const EdgeInsets.all(8.0),
           children: widget.enc.timeline.map((event) {
             return new Card(
               child: new ListTile(
                 title: new EventWidget(event: event),
-                // subtitle: new Divider(color: Colors.grey, height: 2.0),
                 selected: _selected == event.time,
                 onTap: () => _handleEventOnTap(event),
               ),

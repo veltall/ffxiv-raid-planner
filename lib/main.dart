@@ -84,9 +84,8 @@ class _MainScreenState extends State<MainScreen> {
     await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V2.0_(Savage).json');
     await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V3.0_(Savage).json');
     await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.2_(Savage).json');
+    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
     return encs;
   }
 
