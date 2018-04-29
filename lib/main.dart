@@ -80,12 +80,18 @@ class _MainScreenState extends State<MainScreen> {
 
   // TODO: Scan directory and load all available assets
   Future<List<Encounter>> _loadData(List<Encounter> encs) async {
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V2.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V3.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.2_(Savage).json');
-    await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
+    String encRootPath = 'res/db/encounters/';
+    Directory directory = new Directory(encRootPath);
+    Stream<FileSystemEntity> ls = directory.list();
+    ls.listen((fsEntity) async {
+      if(fsEntity is File) await _readEncounterData(encs, fsEntity.path);
+    });
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V2.0_(Savage).json');
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V3.0_(Savage).json');
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.0_(Savage).json');
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V4.2_(Savage).json');
+    // await _readEncounterData(encs, 'res/db/encounters/Sigmascape_V1.0_(Savage).json');
     return encs;
   }
 
